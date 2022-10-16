@@ -1,12 +1,17 @@
-import React from "react";
-import Button from "reaction-bootstrap/Button";
+import React, { useState } from "react";
+import Button from 'react-bootstrap/Button';
 export default function DebugButton(props) {
+    const[myState, setState] = useState("");
     function onClickHandler() {
-        consolr.log("button has been clicked");
+        console.log("button has been clicked");
+        setState(!myState);
     }
-    retrun (
-        <Button variant = "primary" onClick ={onClickHandler}>
-        props.text
+    return (
+        <Button variant="primary" onClick={onClickHandler}>
+            
+            {myState &&
+                "on" || "off"}
+
         </Button>
     )
 }   

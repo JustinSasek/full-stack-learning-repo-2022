@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import DebugButton from "./componenets/DebugButton.js";
 
 function App() {
   return (
@@ -10,14 +9,13 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <DebugButton text = "click here now"></DebugButton>
         <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Don't Learn React
+          Learn React
         </a>
       </header>
     </div>
