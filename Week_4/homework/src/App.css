@@ -1,0 +1,159 @@
+.App {
+  text-align: left;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: stretch;
+  justify-content: stretch;
+  min-width: 1215px;
+
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#weather-section {
+  background-color: #61dafb;
+  flex: 1;
+}
+
+#city-section {
+  background-color: lightgray;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px
+}
+
+#search-button {
+  width: 90px;
+  height: 45px;
+  border-radius: 10px;
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+#search-button:hover {
+  background-color: grey;
+  color: lightgrey;
+  width: 90px;
+  height: 45px;
+  border-radius: 10px;
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+#input-field {
+  width: 235px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 18px;
+
+}
+
+#search-section {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.city-name:hover {
+  font-weight: 700;
+}
+
+#weather-data {
+  padding: 20px;
+  padding-right: 0px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+#title {}
+
+#current {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+}
+
+#current-cond {}
+
+#current-img {
+  margin-left: 15px;
+  width: 170px;
+}
+
+#forcast {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forcast-boxes {
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.forcast-img {
+  width: 100px;
+}
+
+img {
+  display: block;
+}
+
+h1 {
+  font-size: 72px;
+  margin: 0px;
+}
+
+h2 {
+  font-size: 32px;
+  margin: 0px;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 0px;
+}

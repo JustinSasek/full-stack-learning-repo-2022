@@ -17,9 +17,18 @@ function App() {
         >
           Learn React
         </a>
+        <testFunction text = "hello"></testFunction>
       </header>
     </div>
   );
+}
+
+function testFunction(props) {
+  return (
+    <div>
+      test text = {props.text}
+    </div>
+  )
 }
 
 export default App;

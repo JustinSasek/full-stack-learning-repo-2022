@@ -68,7 +68,7 @@ function App() {
 
                   let img = "icons/" + dayData.weather[0].icon + ".svg";
 
-                  for (; (ngew Date(dayData.dt * 1000)).getDate() === d.getDate() && i < data.list.length; i++) {
+                  for (; (new Date(dayData.dt * 1000)).getDate() === d.getDate() && i < data.list.length; i++) {
                     d = new Date(dayData.dt * 1000);
                     min = Math.min(min, Math.trunc(dayData.main.temp_min));
                     max = Math.max(max, Math.trunc(dayData.main.temp_max));
