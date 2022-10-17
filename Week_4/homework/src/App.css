@@ -5,7 +5,7 @@
   width: 100%;
   align-items: stretch;
   justify-content: stretch;
-  min-width: 1215px;
+  min-width: 1253px;
 
 }
 
@@ -98,8 +98,8 @@
 }
 
 #weather-data {
-  padding: 20px;
-  padding-right: 0px;
+  padding: 40px;
+  padding-right: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
