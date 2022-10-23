@@ -12,7 +12,7 @@ function App() {
 
   function onClickHander() {
     let input = document.getElementById("input-field").value;
-    let apiCall = `https://api.openweathermap.org/geo/1.0/direct?q=${input},,US&limit=5&appid=${apiKey}`;
+    let apiCall = `https://tpeo-todo.herokuapp.com/todo`;
     fetch(apiCall)
       .then((response) => response.json())
       .then((data) => {
@@ -24,6 +24,8 @@ function App() {
   const [cities, setCities] = useState('');
 
   function Cities() {
+    
+
     const output = []
     for (var i = 0; i < cities.length; i++) {
       const city = cities[i];
