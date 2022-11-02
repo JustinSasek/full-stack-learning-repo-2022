@@ -24,15 +24,7 @@ class User {
 }
 
 // Fake database which we will be interacting with, key is the username
-let fakeTodoItems =
-  [{
-    uid: "778430",
-    todo: "list item 17"
-  },
-  {
-    uid: "460838",
-    todo: "list item 18"
-  }];
+
 // {
 //   jwong10: {
 //     username: "jwong10",
