@@ -3,15 +3,24 @@ const express = require("express");
 const db = firebase.firestore;
 const pbk = require("pbkdf2");
 const app = express();
+require("dotenv").config();
 app.use(express.json());
 
 // Should be stored in environment variable, but ok for this demo
-const SALT = ";asf;klsadfllsfjalskdfjl";
+
 
 // Creates a user with password, no checks needed
 app.post("/password", async (req, res) => {
+  console.log("/password received");
+  const SALT = process.env["SALT"];
   // Get the username and password from request
   const { username, password } = req.body;
+
+  const hash = pbk.pbkdf2Sync(password, SALT, 100, 64, 'sha256');
+  await db.collection("passwords").doc(username).set({
+    hash: hash,
+    salt: SALT
+  })
   // TODO: hash the password
   // Create the User
   // Send message indicating success
@@ -20,10 +29,17 @@ app.post("/password", async (req, res) => {
 
 // Verifies password
 app.post("/verifyPassword", async (req, res) => {
+  console.log("/verifyPassword received");
+  const SALT = process.env["SALT"];
   const { username, password } = req.body;
   // TODO: hash the password
+  const hash = pbk.pbkdf2Sync(password, SALT, 100, 64, 'sha256').toString();
   // Set this to when you check the password
-  let samePassword = false;
+  const signInData = (await db.collection("passwords").doc(username).get()).data();
+  signInData.hash = signInData.hash.toString();
+  signInData.salt = signInData.salt.toString();
+
+  let samePassword = signInData.hash === hash && signInData.salt === SALT;
   // Get the user
   // Cross check the user's password with the passwordHash
   // Send arbitrary message
@@ -34,4 +50,4 @@ app.post("/verifyPassword", async (req, res) => {
   }
 });
 
-app.listen(4000, () => console.log("App listening on port " + 4000));
+app.listen(process.env["PORT"], () => console.log("App listening on port " + process.env["PORT"]));

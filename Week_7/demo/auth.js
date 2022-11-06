@@ -10,6 +10,9 @@ app.use(express.json());
 const SALT = ";asf;klsadfllsfjalskdfjl";
 const JWTSECRET = "abc123";
 
+//var token = jwt.sign({foo: 'hrrrrrr.'}, 'shhhhhh')
+//var decoded jwt.verify(token, 'shhhhhhh')   with try catch
+
 // Auth Middleware for non expiring tokens
 function authMiddleware(req, res, next) {
   console.log("next");
@@ -20,7 +23,7 @@ function authMiddleware(req, res, next) {
     // Check if first argument is Bearer
     if (headers.length === 2 && headers[0] === "Bearer") {
       // TODO: get the token
-      let token = "";
+      let token = headers[1];
       try {
         let decodedToken = jwt.verify(token, JWTSECRET);
         // Set user object which can be accessed in the req
@@ -51,8 +54,8 @@ app.post("/register", async (req, res) => {
     return res.status(400).json({ msg: "User exists" });
   }
   // TODO: Create the User and fill in user and token
-  const user = "";
-  const token = "";
+  const user = "";  //for sending to the database
+  const token = "BEARER " + ;
 
   // Send JWT Token
   res.json({
@@ -81,7 +84,7 @@ app.post("/login", async (req, res) => {
   let samePassword = false;
   if (samePassword) {
     // TODO: Issue token if passwords match, else, return a 401, not authorized
-    const token = ""
+    const token = "BEARER " + ;
     return res.json({
       msg: "successfully logged in",
       data: { username: username },

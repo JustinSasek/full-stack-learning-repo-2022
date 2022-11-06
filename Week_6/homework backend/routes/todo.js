@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const middleware = require('../middleware/functions');
 const { random } = require("underscore");
+const { addConsoleHandler } = require("selenium-webdriver/lib/logging");
 const db = firebase.firestore;
 
 
@@ -23,23 +24,6 @@ class User {
   }
 }
 
-// Fake database which we will be interacting with, key is the username
-
-// {
-//   jwong10: {
-//     username: "jwong10",
-//     password: "jwong10",
-//   },
-//   frey: {
-//     username: "frey",
-//     password: "frey",
-//   },
-// };
-
-// todo.get("/", (req, res) => {
-//   let userDB = fakeUsers;
-//   res.status(200).json(userDB);
-// });
 
 todo.get("/", async (req, res) => {
   console.log('retrieving data');
@@ -61,6 +45,7 @@ todo.get("/", async (req, res) => {
 
 todo.delete("/", async (req, res) => {
   console.log('deleting', req.body.uid);
+  req.body.uid = req.body.uid.toString();
 
   const doc = await db.collection("todo-items").doc(req.body.uid).get();
   if (doc.exists) {
@@ -75,24 +60,9 @@ todo.delete("/", async (req, res) => {
     });
   }
 
-  // await deleteDoc(doc(db, "cities", "DC"));
-
-
-  //   let userDB = fakeUsers;
-  //   const todo = req.params.user_id;
-  //   if (userDB[todo]) {
-  //     res.status(200).json(userDB[todo]);
-  //   } else {
-  //     throw Error("User not found");
-  //   }
 });
 
 
-// TODO add POST (Create) route with json input validation middleware
-
-// users.post("/new_user", middleware.validateSchema(User), (req, res, next) => {
-//   res.json();
-// })
 
 todo.post("/", middleware.validateSchema(User), (req, res) => {
   console.log('adding', req.body.todo);

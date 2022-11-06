@@ -84,7 +84,7 @@ export default function HomePage() {
         fetch("http://localhost:5001/todo", requestOptions)
           .then((response) => response.json())
           .then((result) => {
-            console.log(result);
+            console.log("result", result);
             setTasks(
               tasks.concat({
                 name: taskName,
@@ -118,7 +118,7 @@ export default function HomePage() {
     fetch("http://localhost:5001/todo", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result);
+        console.log("result", result);
         const newTasks = tasks.map((task) => {
           if (task.name === name) {
             task.uid = result.uid;
@@ -156,14 +156,11 @@ export default function HomePage() {
   function updateTask(name) {
     const newTasks = tasks.map((task) => {
       if (task.name === name) {
-        console.log(name)
         task.finished = !task.finished;
         if (task.finished) {
-          console.log("finished")
           removeTaskFromServer(task.uid);
         } else {
-          // console.log("return");
-          // console.log(addTaskToServer(task.name));
+          console.log(addTaskToServer(task.name));
         }
       }
       return task;
