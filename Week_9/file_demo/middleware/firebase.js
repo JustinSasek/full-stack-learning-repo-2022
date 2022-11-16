@@ -1,5 +1,5 @@
 var admin = require("firebase-admin");
-var serviceAccount = require("./cred.json");
+var serviceAccount = require("../cred.json");
 
 // Load Credentials
 var { getStorage } = require("firebase-admin/storage");
