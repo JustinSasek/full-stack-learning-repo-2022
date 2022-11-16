@@ -15,3 +15,15 @@ describe("Config Endpoint", () => {
     expect(res.body).toMatchObject({ version: "0.0.1" });
   });
 });
+
+describe("Config Endpoint", () => {
+  it("POST /config should show version", async () => {
+    // Use supertest to call the server
+    const res = await requestWithSupertest.post("/config");
+
+    expect(res.status).toEqual(201);
+    expect(res.type).toEqual(expect.stringContaining("json"));
+    expect(res.headers["content-type"]).toContain("application/json");
+    expect(res.body).toMatchObject({ version: "0.0.1" });
+  });
+});

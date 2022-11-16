@@ -2,11 +2,14 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { SearchBar } from "../components/SearchBar";
 
+
+//Rendering
 it("renders correctly", () => {
   const { queryByPlaceholderText } = render(<SearchBar />);
   expect(queryByPlaceholderText("Search")).toBeTruthy();
 });
 
+//input
 describe("Input Value", () => {
   it("updates on change", () => {
     const { queryByPlaceholderText } = render(<SearchBar />);
@@ -17,6 +20,7 @@ describe("Input Value", () => {
   });
 });
 
+//search button
 describe("Search Button", () => {
   describe("with empty query", () => {
     it("does not trigger requestSearch", () => {
@@ -39,7 +43,11 @@ describe("Search Button", () => {
       const searchInput = queryByPlaceholderText("Search");
       const buttonInput = queryByTestId("search-button");
 
-      // TODO: write code
+      fireEvent.change(searchInput, { target: { value: "abc" } });
+      expect(searchInput.value).toBe("abc");
+      fireEvent.click(buttonInput);
+      expect(requestSearch).toHaveBeenCalled();
+      expect(searchInput.value).toBe("");
     });
   });
 });

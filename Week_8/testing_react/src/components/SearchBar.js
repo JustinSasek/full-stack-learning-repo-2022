@@ -7,6 +7,7 @@ export const SearchBar = ({ requestSearch }) => {
     // Checks if query is not empty
     if (query) {
       requestSearch(query);
+      setQuery("");
     }
   };
   const updateQuery = (e) => {
@@ -21,7 +22,7 @@ export const SearchBar = ({ requestSearch }) => {
         value={query}
         onChange={updateQuery}
       ></input>
-      <button data-testid="search-button" onClick={searchClick} />
+      <button data-testid="search-button" onClick={searchClick} >Search </button>
     </div>
   );
 };
