@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import { Outlet, Navigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import img from './Default.jpeg'
+import img from './Default.jpeg';
 
 const headerHeight = 80;
 
@@ -35,14 +35,15 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
+
 export default function DefaultLayout() {
   const { classes } = useStyles();
   const auth = useContext(AuthContext);
   const username = window.localStorage.getItem("username");
   const [uploadShowing, setUploadShowing] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
+  const [picURL, setPicURL] = useState();  // URL.createObjectURL(event.target.files[0])
   const submit = (selectedFile) => {
-    console.log(selectedFile);
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + window.localStorage.getItem("token"));
@@ -63,22 +64,36 @@ export default function DefaultLayout() {
       .catch(error => console.log('error', error));
     setUploadShowing(false)
     setSelectedFile(null);
+    setPicURL(URL.createObjectURL(selectedFile));
   }
-  const changeHandler = (event) => {
-    console.log("change handler called")
-    console.log(event.target.files[0])
-    setSelectedFile(event.target.files[0]);
-    // console.log("2")
-    setIsSelected(true);
-    // console.log("3")
-  };
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + window.localStorage.getItem("token"));
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:5001/pic/" + username + ".jpg", requestOptions)
+      .then(response => response.blob())
+      .then(result => {
+        setPicURL(URL.createObjectURL(result));
+      })
+      .catch(error => {
+        console.log('error', error);
+        setPicURL(img);
+      });
+  }, []);
+
   const HeaderContent = (
     <Group className={classes.headerGroup} position="apart">
       <Group>
-        <img src={img} height="50px" onClick={() => { setUploadShowing(!uploadShowing)}} />
+        <img src={picURL} height="50px" onClick={() => { setUploadShowing(!uploadShowing) }} />
         {uploadShowing && <Group>
-          <input type="file" name="file" onChange={() => setSelectedFile(event.target.files[0]) }/>
-          <button onClick={() => submit(selectedFile)}>Submit</button>
+          <input type="file" name="file" onChange={() => setSelectedFile(event.target.files[0])} />
+          <Button onClick={() => submit(selectedFile)}>Submit</Button>
         </Group>}
         <Title>{username}'s Todo App</Title>
       </Group>

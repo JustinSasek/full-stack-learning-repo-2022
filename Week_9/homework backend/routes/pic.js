@@ -56,5 +56,28 @@ pic.post("/", middleware.authMiddleware, multer().single("pic"), async (req, res
 
 })
 
+pic.get("/:file_name", middleware.authMiddleware, async (req, res) => {
+  try {
+    // Specify where to download the file to
+    const file_name = req.params.file_name;
+    const file_location = path.join(__dirname, "../files", file_name);
+    const downloadOption = {
+      destination: file_location,
+    };
+    // Checks if the file exists on the server, retrieves from bucket if it doesn't
+    // if (!fs.existsSync(file_location)) {
+    //   fs.unlinkSync(file_location);
+    //   // Downloads the File from the bucket, throws an exception if it doesn't exist
+    // }
+    await bucket.file(file_name).download(downloadOption);
+
+    // Return the file
+    return res.status(200).sendFile(file_location);
+  } catch (e) {
+    console.log(e);
+    return res.status(404).send("No such file exists");
+  }
+})
+
 // Export Route
 module.exports = pic;

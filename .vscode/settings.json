@@ -1,6 +1,7 @@
 {
     "git.ignoreLimitWarning": true,
     "cSpell.words": [
+        "dofile",
         "firestore",
         "werkjbwerkjwbeusdf"
     ]
