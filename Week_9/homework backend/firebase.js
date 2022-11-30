@@ -10,6 +10,6 @@ const app = admin.initializeApp({
 });
 
 const firestore = admin.firestore();
-const stor = getStorage(app);
-console.log(stor);
-module.exports = { firestore, stor};
+const bucket = getStorage(app).bucket();
+// console.log(stor);
+module.exports = { firestore, bucket };

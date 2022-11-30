@@ -11,8 +11,9 @@ const middleware = require('../middleware/functions');
 const { random } = require("underscore");
 const { addConsoleHandler } = require("selenium-webdriver/lib/logging");
 const db = firebase.firestore;
-const storage = firebase.stor;
+const bucket = firebase.bucket;
 const multer = require("multer");
+const path = require("path");
 // const { ref } = require("firebase-admin");
 // var { getStorage } = require("firebase-admin/stor");
 // const { storage } = require("firebase-admin");
@@ -36,7 +37,7 @@ pic.use(express.json());
 
 
 
-pic.post("/", multer().single("pic"), async (req, res) => { //middleware.authMiddleware,
+pic.post("/", middleware.authMiddleware, multer().single("pic"), async (req, res) => { //middleware.authMiddleware,
   console.log('adding pic');
   const file = req.file;
   if (file.mimetype != 'image/jpeg' && file.mimetype != 'image/png') {
@@ -45,72 +46,14 @@ pic.post("/", multer().single("pic"), async (req, res) => { //middleware.authMid
   }
   // console.log(file.fieldname);
 
-  if (file == null)
+  if (file == null) {
+    res.status(401).send("File is null");
     return;
+  }
 
-  console.log(storage)
-  const url = 'gs://todo-list-be033.appspot.com/Space.png';
-  const storageRef = ref(storage, url);
-  // const storageRef = ref(stor, 'gs://todo-list-be033');
-  // const storageRef = ref(mainRef, 'Space.png');
-  console.log(storageRef);
-  uploadBytes(storageRef, file)
-  .then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-  });
-  // stor.put(file) //.ref(`/images/${file.fieldname}`)
-  //   .on("state_changed", alert("success"), alert);
+  const c = await bucket.file(req.file.originalname).save(req.file.buffer);
+  res.status(201).send("File uploaded");
 
-  // admin.initializeApp({
-  //   credential: admin.credential.cert(serviceAccount), storageBucket: "gs://databases-demo-bd424.appspot.com",
-  // });
-  // var bucket = getStorage().bucket();
-
-  // storage.ref(`/images/profile`)
-  // .put(file)
-  //   .on("state_changed", alert("success"), alert);
-
-  // var ref = storageRef.child('images/space.jpg');
-  // ref.put(file.buffer).then((snapshot) => {
-  //   console.log('Uploaded an array!');
-  // })
-  //   .then(() => {
-  //     res.status(201).send("image updated");
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error writing document: ", error);
-  //     res.status(400).send("Failed to add");
-  //   });
-  // uid = Math.floor(Math.random() * (999999 - 111111 + 1)) + 111111;
-
-  // db.collection("pic-items").doc('' + uid).set({
-  //   uid: uid,
-  //   pic: req.body.pic,
-  //   email: req.email
-  // })
-  //   .then(() => {
-  //     res.status(201).json({
-  //       msg: "item created",
-  //       uid: uid
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error writing document: ", error);
-  //     res.status(400).send("Failed to add");
-  //   });
-
-
-  // if (fakeUsers[newUsername] == undefined) {
-  //   fakeUsers[newUsername] = {
-  //     username: newUsername,
-  //     password: req.body.password
-  //   };
-  //   res.status(200).send("Success");
-  // }
-  // else {
-  //   res.status(401)
-  //   res.send("Username already created");
-  // }
 })
 
 // Export Route

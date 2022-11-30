@@ -43,11 +43,16 @@ export default function DefaultLayout() {
   const [selectedFile, setSelectedFile] = useState();
   const submit = (selectedFile) => {
     console.log(selectedFile);
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + window.localStorage.getItem("token"));
+
     var formdata = new FormData();
-    formdata.append(selectedFile.name, selectedFile, "file");
+    formdata.append("pic", selectedFile, username + ".jpg");
 
     var requestOptions = {
       method: 'POST',
+      headers: myHeaders,
       body: formdata,
       redirect: 'follow'
     };
